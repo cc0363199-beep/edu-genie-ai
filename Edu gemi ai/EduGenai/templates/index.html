@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduGenie</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>🎓 EduGenie</h1>
+
+        <h2>AI Powered Learning Assistant</h2>
+
+        <p>Learn smarter with AI.</p>
+
+        <input
+            type="text"
+            id="topic"
+            placeholder="Enter a topic..."
+        >
+
+        <button onclick="startLearning()">
+            Start Learning
+        </button>
+
+        <div id="result"></div>
+    </div>
+
+       <script>
+async function startLearning() {
+
+    const topic = document.getElementById("topic").value.trim();
+
+    if (!topic) {
+        alert("Please enter a topic");
+        return;
+    }
+
+    const result = document.getElementById("result");
+
+    result.innerHTML = "<p>⏳ Generating your lesson...</p>";
+
+    try {
+
+        const response = await fetch("/learn", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                topic: topic
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Something went wrong");
+        }
+
+        result.innerHTML = `
+            <h3>📚 ${data.topic}</h3>
+            <div>${data.result}</div>
+        `;
+
+    } catch (error) {
+
+        console.error(error);
+
+        result.innerHTML = `
+            <p style="color:red;">
+                ❌ Error: ${Python — A high-level, interpreted programming language used to build applications, websites, automation, AI, and more.
+Variable — A name used to store a value.
+name = "Chandru"
+Data type — Defines the kind of value stored in a variable.
+int → whole numbers
+float → decimal numbers
+str → text
+bool → True/False
+list → collection of values
+dict → key-value pairs
+Operator — A symbol used to perform an operation, such as +, -, *, /, ==.
+Conditional statement — Used to make decisions using if, elif, and else.
+Loop — Used to repeat code, mainly for and while.
+Function — A reusable block of code that performs a specific task.
+def greet():
+    print("Hello")
+List — An ordered collection of values.
+subjects = ["Python", "AI", "Math"]
+Dictionary — A collection of key-value pairs.
+student = {"name": "Chandru", "age": 20}
+Module — A Python file containing reusable Python code.}
+            </p>
+        `;
+    }
+}
+</script>
+
+</body>
+</html>
